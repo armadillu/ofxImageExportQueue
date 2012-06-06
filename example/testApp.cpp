@@ -7,34 +7,37 @@ void testApp::setup(){
 	ofSetFrameRate(60);
 	ofBackground(0, 0, 0, 255);
 	glEnable(GL_POINT_SMOOTH);
-	glPointSize(5);
+	glPointSize(4);
 	glLineWidth(3);
 	
 	recording = false;
 	
 	exporter = new ofxImageExportQueue( 2 ); // 2 threads
 	
-	float speed = 0.1;
+	float w = 15;
 	for(int i = 0; i < NUM_PART; i++){
-		particles[i].p = ofVec2f( ofGetWidth()/2, ofGetHeight()/2 );
-		particles[i].v = ofVec2f( ofRandom(-speed,speed), ofRandom(-speed,speed) );		
+		float percent = (float)i / (NUM_PART - 1);		
+		particles[i].p = ofVec2f( ofGetWidth()/2 + ofRandom(-w, w), ofGetHeight()/2 + ofRandom(-w, w));
+		particles[i].c.setHsb( 255. * percent, 255, 200, 64);
 	}
 }
 
 
-
 void testApp::update(){
 
+	// update particles /////////////////////////////////////////////////////////////////////////////
 	float dt = 0.01666666f;
 	
-	//update particles
-	float gain = 2;
-	float delay = 0.01;
+	float timeScale = 0.15;
+	float size = 700 * timeScale;
+	float delay = 0.0009;
+		
 	for(int i = 0; i < NUM_PART; i++){		
-		particles[i].v.x += gain * ofSignedNoise( ofGetElapsedTimef() + delay * i + mouseX );	
-		particles[i].v.y += gain * ofSignedNoise( ofGetElapsedTimef() - delay * i + mouseY );	
+		particles[i].v.x = size * ofSignedNoise( timeScale * ofGetElapsedTimef() + delay * i );	
+		particles[i].v.y = size * ofSignedNoise( timeScale * ofGetElapsedTimef() - delay * i );	
 		particles[i].p += dt * particles[i].v;
-	}	
+	}		
+	// end particles /////////////////////////////////////////////////////////////////////////////
 	
 	exporter->update();	
 }
@@ -52,23 +55,22 @@ void testApp::exit(){
 void testApp::draw(){
 
 	//draw particles
-	ofEnableBlendMode(OF_BLENDMODE_ADD);
 	ofMesh mesh;
 	
 	for(int i = 0; i < NUM_PART; i++){		
 		mesh.addVertex( particles[i].p );
+		mesh.addColor( particles[i].c );
 	}	
-
-	ofSetColor(128);
-
-	mesh.setMode(OF_PRIMITIVE_LINE_STRIP);
+		
+	mesh.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
 	mesh.drawFaces();
-
+	
+	//mesh.clearColors();
+	ofEnableBlendMode(OF_BLENDMODE_ADD);
+	ofSetColor(16);
 	mesh.setMode(OF_PRIMITIVE_POINTS);
 	mesh.drawFaces();
-
 	ofEnableBlendMode(OF_BLENDMODE_ALPHA);
-	ofSetColor(255);
 
 	
 	//capture current frame

@@ -3,7 +3,7 @@
 #include "ofMain.h"
 #include "ofxImageExportQueue.h"
 
-#define NUM_PART 1000
+#define NUM_PART 5000
 
 class testApp : public ofBaseApp{
 
@@ -19,6 +19,7 @@ class testApp : public ofBaseApp{
 		typedef struct particle{
 			ofVec2f p;
 			ofVec2f v;
+			ofColor c;
 		};
 	
 		particle particles[NUM_PART];
