@@ -1,6 +1,7 @@
 # ofxImageExportQueue 
 
-This add-on allows you to save to disk any number of images (most likely screen grabs) to export an image sequence. It allows you to do so on multiple threads if you require so, allowing you to export in realtime (depending on your HW and project complexity). Requires the [ofxWorkQueues](https://github.com/armadillu/ofxWorkQueues) add-on.
+This add-on allows you to save to disk any number of images (most likely screen grabs) to export an image sequence. It allows you to do so on multiple threads if you require so, allowing you to export in realtime (depending on your HW and project complexity). Requires the [ofxWorkQueues](https://github.com/armadillu/ofxWorkQueues) add-on. See [video](https://vimeo.com/43553192).
+
 
 
 	void setup(){
@@ -20,7 +21,4 @@ This add-on allows you to save to disk any number of images (most likely screen 
 
 		exporter->draw( 10, 10); //draw exporter status
 	}
-
-
-see [video](https://vimeo.com/43553192).
 
