@@ -16,7 +16,7 @@ This add-on allows you to save to disk any number of images (most likely screen 
 		img.setUseTexture(false); //no texture 
 		img.grabScreen(0, 0, ofGetWidth(), ofGetHeight()); //capture frame into ofImage
 			
-		exporter->saveImage( img ); //add frame to exporter
+		exporter->saveImage( img ); //add frame to exporter queue
 
 		exporter->draw( 10, 10); //draw exporter status
 	}
