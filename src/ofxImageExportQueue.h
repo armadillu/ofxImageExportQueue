@@ -45,7 +45,7 @@ class ofxImageExportQueue {
 			q1->setVerbose(false);
 			q1->setIndividualWorkerQueueMaxLen(2);
 			q1->setMaxPendingQueueLength(1000);
-			q1->setRestTimeMillis(5);
+			q1->setRestTimeMillis(1);
 		};
 
 	
@@ -53,6 +53,9 @@ class ofxImageExportQueue {
 			delete q1;
 		};
 
+		void setRestTime(int milis){
+			q1->setRestTimeMillis(milis);
+		}
 	
 		void update(){
 
@@ -71,8 +74,9 @@ class ofxImageExportQueue {
 		}
 
 	
-		bool saveImage(ofImage i, string fileName = ""){
-			
+		bool saveImage(ofImage &i, string fileName = ""){
+
+			bool tex = i.isUsingTexture();
 			i.setUseTexture(false);			
 			if (fileName.length() == 0){
 				fileName = ofToString(imgCounter) + ".png";
@@ -85,6 +89,7 @@ class ofxImageExportQueue {
 			}else{
 				imgCounter++;
 			}
+			i.setUseTexture(tex);
 			return added;
 		};
 	

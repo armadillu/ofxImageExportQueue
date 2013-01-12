@@ -30,7 +30,7 @@ void testApp::update(){
 	
 	float timeScale = 0.15;
 	float size = 700 * timeScale;
-	float delay = 0.0009;
+	float delay = 0.0005;
 		
 	for(int i = 0; i < NUM_PART; i++){		
 		particles[i].v.x = size * ofSignedNoise( timeScale * ofGetElapsedTimef() + delay * i );	
